@@ -40,14 +40,16 @@ Intentionally I have left out the following features
 ##Heading
 
 Precede the content with !
+you can added from a single ! to six !!!!!! depeding on the level of heading
 
 ##List
 
 Precede the content with a #
+You can nest list inside other by adding multiple # like ##
 
 ##Horizontal Ruler
 
-For horizontal ruler just add --- in a line
+For horizontal ruler just add --- in a separate line
 
 ##Preformatted content
 
