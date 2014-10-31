@@ -3,33 +3,9 @@ OnlyText
 
 #Introduction
 
-This is a simple text editor that lets you concentrate only on your content. It runs in full screen. Your content is available at <My Documents Folder>\Post.txt as text and as <My Documents Folder>\Post.htm as html. You format your text easily and the editor takes care of converting it to html. See the formatting section below. In addition to this a basic spell-check too is supported.
+Somehow I felt a need for a simple editor that will allow me to concentrate on my writing and finally convert the text into basic html that I can push to wordpress. During a lunch break I tested my wpf and wrote this. I am publishing this to github so that someone with a similar need can pull and use it from here.
 
-#Formatting
-
-##Heading
-
-Precede the content with !
-
-##List
-
-Precede the content with a #
-
-##Horizontal Ruler
-
-For horizontal ruler just add --- in a line
---- 
-
-##Preformatted content
-
-Enclose the content between {{ }} 
-
-{{
-
-Any content here will appear as is
-
-}}
-
+It is a simple text editor that lets you concentrate only on your content. It runs in full screen. Your content is available at <My Documents Folder>\Post.txt as text and as <My Documents Folder>\Post.htm as html. You format your text easily by adding some markers (similar to writing in a wiki) and the editor takes care of converting it to html. See the formatting section below. In addition to this a basic spell-check too is supported (thanks to wpf).
 
 #Shortcut Keys
 
@@ -52,8 +28,34 @@ Any content here will appear as is
     F5  - Preview the content as HTML.
     F6  - Increase the text area.
     F7  - Decrease the text area.
-     
-     
-#History
 
-Somehow I felt a need for a simple editor that will allow me to concentrate on my writing and finally convert the text into basic html that I can push to wordpress. During a lunch break I wrote this using wpf for myself. I am publishing this to github so that someone with a similar need and pull and use it from here.
+
+#Formatting
+
+##Heading
+
+Precede the content with !
+
+##List
+
+Precede the content with a #
+
+##Horizontal Ruler
+
+For horizontal ruler just add --- in a line
+
+##Preformatted content
+
+Enclose the content between {{ }} 
+
+{{
+
+Any content here will appear as is
+
+}}
+
+
+     
+     
+
+
