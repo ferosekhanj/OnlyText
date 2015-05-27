@@ -1,6 +1,8 @@
 OnlyText
 ========
 
+[![Build status](https://ci.appveyor.com/api/projects/status/567ct14my06097xf?svg=true)](https://ci.appveyor.com/project/ferosekhanj/onlytext)
+
 Somehow I felt a need for a simple editor that will allow me to concentrate on my writing. I checked out some of the distraction free editors and finally decided to write it on my own. During a lunch break I tested my wpf and wrote this. I am publishing this to github so that someone with a similar need can pull and use it from here. In my opinion wpf is really powerful and has high productivity compared to the previous UI technologies. The steep learning curve is worth every second.
 
 It is a simple text editor that lets you concentrate only on your content. It runs in full screen. Your content is available at My Documents\Post.txt as text and as My Documents\Post.htm as html. You format your text easily by adding some markers (similar to writing in a wiki) and the editor takes care of converting it to html. See the formatting section below. In addition to this a basic spell-check too is supported (thanks to wpf).
