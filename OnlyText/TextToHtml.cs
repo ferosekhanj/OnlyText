@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace OnlyText
 {
+    /// <summary>
+    /// This converts the formatted text to html
+    /// </summary>
     class TextToHtml
     {
         string myFilePath;
