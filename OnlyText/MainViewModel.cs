@@ -282,6 +282,7 @@ Alt + f4 - Close application.
      F7  - Decrease the text area.
 }}
 
+- Ferose Khan J
 ";
         }
     }
