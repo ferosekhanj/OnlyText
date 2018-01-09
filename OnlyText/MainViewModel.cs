@@ -1,18 +1,17 @@
-﻿using Commander;
-using PropertyChanged;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
 namespace OnlyText
 {
-    [ImplementPropertyChanged]
-    public class MainViewModel
+    public class MainViewModel :INotifyPropertyChanged
     {
         string myFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Post.txt");
         string myHtmlFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Post.htm");
@@ -28,73 +27,166 @@ namespace OnlyText
             {
                 JustText = File.ReadAllText(myFilePath);
             }
-            if(string.IsNullOrEmpty(JustText))
+            if (string.IsNullOrEmpty(JustText))
                 JustText = "Start typing your text here... Press F1 for help...";
+
+            CreateCommands();
+        }
+        private void RaisePropertyChanged([CallerMemberName]string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public string JustText { get; set; }
+        string justText;
+        public string JustText
+        {
+            get => justText;
+            set
+            {
+                if (justText == value)
+                    return;
+                justText = value;
+                RaisePropertyChanged();
+            }
+        }
 
-        public int FontSize { get; set; }
+        int fontSize;
+        public int FontSize
+        {
+            get => fontSize;
+            set
+            {
+                if (fontSize == value)
+                    return;
+                fontSize = value;
+                RaisePropertyChanged();
+            }
+        }
 
-        public bool SpellCheck { get; set; }
+        bool spellCheck;
+        public bool SpellCheck
+        {
+            get => spellCheck;
+            set
+            {
+                if (spellCheck == value)
+                    return;
+                spellCheck = value;
+                RaisePropertyChanged();
+            }
+        }
 
-        public Thickness Padding { get; set; }
+        Thickness padding;
+        public Thickness Padding
+        {
+            get => padding;
+            set
+            {
+                if (padding == value)
+                    return;
+                padding = value;
+                RaisePropertyChanged();
+            }
+        }
 
-        [OnCommand("NewCommand")]
-        public void NewCommand()
+        private void CreateCommands()
+        {
+            NewCommand = new RelayCommand<object>(_ => OnNewCommand());
+            SaveCommand = new RelayCommand<object>(_ => OnSaveCommand());
+            PreviewCommand = new RelayCommand<object>(_ => OnPreviewCommand());
+            IncreaseFontSizeCommand = new RelayCommand<object>(_ => OnIncreaseFontSizeCommand());
+            DecreaseFontSizeCommand = new RelayCommand<object>(_ => OnDecreaseFontSizeCommand());
+            IncreasePaddingCommand = new RelayCommand<object>(_ => OnIncreasePaddingCommand());
+            DecreasePaddingCommand = new RelayCommand<object>(_ => OnDecreasePaddingCommand());
+            ToggleSpellCheckCommand = new RelayCommand<object>(_ => OnToggleSpellCheckCommand());
+            ExitHelpTextCommand = new RelayCommand<object>(_ => OnExitHelpTextCommand());
+            HelpTextCommand = new RelayCommand<object>(_ => OnHelpTextCommand());
+        }
+
+        public RelayCommand<object> NewCommand
+        {
+            get;
+            set;
+        }
+
+        public void OnNewCommand()
         {
             myBackupText = null;
             JustText = "Start typing your text here... Press F1 for help...";
         }
 
-        [OnCommand("SaveCommand")]
-        public void SaveCommand()
+        public RelayCommand<object> SaveCommand
+        {
+            get;
+            set;
+        }
+        public void OnSaveCommand()
         {
             if (!string.IsNullOrEmpty(myBackupText))
             {
-                ExitHelpTextCommand();
+                OnExitHelpTextCommand();
             }
 
             myConvertor.ConvertAndSave(JustText);
             File.WriteAllText(myFilePath, JustText);
         }
 
-        [OnCommand("PreviewCommand")]
-        public void PreviewCommand()
+        public RelayCommand<object> PreviewCommand
+        {
+            get;
+            set;
+        }
+        public void OnPreviewCommand()
         {
             myConvertor.ConvertAndSave(JustText);
             Process.Start(myHtmlFilePath);
         }
-        [OnCommand("IncreaseFontSizeCommand")]
-        public void IncreaseFontSizeCommand()
+        public RelayCommand<object> IncreaseFontSizeCommand
         {
-            FontSize++;
+            get;
+            set;
         }
-        [OnCommand("DecreaseFontSizeCommand")]
-        public void DecreaseFontSizeCommand()
+        public void OnIncreaseFontSizeCommand() => FontSize++;
+
+        public RelayCommand<object> DecreaseFontSizeCommand
         {
-            FontSize--;
+            get;
+            set;
         }
-        [OnCommand("IncreasePaddingCommand")]
-        public void IncreasePaddingCommand()
+        public void OnDecreaseFontSizeCommand() => FontSize--;
+
+        public RelayCommand<object> IncreasePaddingCommand
         {
-            Padding = new Thickness(Padding.Left+5,5,Padding.Right+5,5);
+            get;
+            set;
         }
-        [OnCommand("DecreasePaddingCommand")]
-        public void DecreasePaddingCommand()
+        public void OnIncreasePaddingCommand() => Padding = new Thickness(Padding.Left + 5, 5, Padding.Right + 5, 5);
+
+        public RelayCommand<object> DecreasePaddingCommand
+        {
+            get;
+            set;
+        }
+        public void OnDecreasePaddingCommand()
         {
             if (Padding.Left == 0)
                 return;
             Padding = new Thickness(Padding.Left - 5, 5, Padding.Right - 5, 5);
         }
-        [OnCommand("ToggleSpellCheckCommand")]
-        public void ToggleSpellCheckCommand()
+        public RelayCommand<object> ToggleSpellCheckCommand
         {
-            SpellCheck = !SpellCheck;
+            get;
+            set;
+        }
+        public void OnToggleSpellCheckCommand() => SpellCheck = !SpellCheck;
+
+        public RelayCommand<object> ExitHelpTextCommand
+        {
+            get;
+            set;
         }
 
-        [OnCommand("ExitHelpTextCommand")]
-        public void ExitHelpTextCommand()
+        public void OnExitHelpTextCommand()
         {
             if (myBackupText == null)
                 return;
@@ -103,9 +195,16 @@ namespace OnlyText
             myBackupText = null;
         }
 
+        public RelayCommand<object> HelpTextCommand
+        {
+            get;
+            set;
+        }
         string myBackupText;
-        [OnCommand("HelpTextCommand")]
-        public void HelpTextCommand()
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void OnHelpTextCommand()
         {
             if (!string.IsNullOrEmpty(myBackupText))
                 return;
